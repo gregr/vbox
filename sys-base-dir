@@ -1,0 +1,4 @@
+#!/bin/bash
+set -euf -o pipefail
+
+VBoxManage list systemproperties | grep 'Default machine folder' | awk -F':' '{print $2}' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'
