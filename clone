@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "" "new-vm-name" "" "$@"
+src_vm_name="$vm_name"
+new_vm_name="$1"
+
+VBoxManage clonevm "$src_vm_name" --name "$new_vm_name" --mode all --register
