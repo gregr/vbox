@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "" "" "" "$@"
+ctrl_name='SATA'
+next_ctrl_port="$(VBoxManage showvminfo "$vm_name" --machinereadable | grep "$ctrl_name" | grep '="none"' | xargs | awk '{print $1}' | awk -F'-' '{print $2}')"
+
+if [ -n "$next_ctrl_port" ]
+then "$DIR/hd-create" "$next_ctrl_port" 0
+else printf "no available '$ctrl_name' ports\n" 1>&2 && exit 1
+fi

@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name hd_size_mb" "" "controller-port controller-device" "" "$@"
+ctrl_name='SATA'
+ctrl_port="$1"
+ctrl_device="$2"
+hd_filename="$vm_name"__"$ctrl_name-$ctrl_port-$ctrl_device.vmdk"
+hd_path="$("$DIR/sys-base-dir")/$vm_name/$hd_filename"
+
+VBoxManage createhd --filename "$hd_path" --size "$hd_size_mb" --format VMDK
+VBoxManage storageattach "$vm_name" --storagectl "$ctrl_name" --port "$ctrl_port" --device "$ctrl_device" --type hdd --medium "$hd_path"
