@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "" "rule-name" "" "$@"
+rule_name="$1"
+
+VBoxManage modifyvm "$vm_name" --natpf1 delete "$rule_name"

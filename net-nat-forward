@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euf -o pipefail
+
+: ${rule_protocol='tcp'}
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "rule_protocol" "rule-name host-port guest-port" "" "$@"
+rule_name="$1"
+host_port="$2"
+guest_port="$3"
+
+VBoxManage modifyvm "$vm_name" --natpf1 "$rule_name,$rule_protocol,,$host_port,,$guest_port"
