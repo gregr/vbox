@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "" "" "" "$@"
+
+"$DIR/net-nat-forward-rulenames" | while read rule_name; do "$DIR/net-nat-unforward" "$rule_name"; done
