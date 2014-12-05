@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euf -o pipefail
+
+: ${num_cpus=1}
+: ${memory_size_mb=512}
+: ${hd_size_mb=16384}  # 16 GB
+: ${io_apic='on'}
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "num_cpus memory_size_mb hd_size_mb io_apic" "" "" "$@"
+
+VBoxManage createvm --name "$vm_name" --register
+VBoxManage modifyvm "$vm_name" --cpus "$num_cpus" --memory "$memory_size_mb" --vrde off --acpi on --boot1 dvd --rtcuseutc on --ioapic "$io_apic"
+VBoxManage storagectl "$vm_name" --name IDE --add ide --bootable on
+VBoxManage storagectl "$vm_name" --name SATA --add sata --bootable on
