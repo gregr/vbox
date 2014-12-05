@@ -16,3 +16,4 @@ VBoxManage storagectl "$vm_name" --name SATA --add sata --bootable on
 "$DIR/dvd-detach"
 export hd_size_mb
 "$DIR/hd-add"
+"$DIR/net-nat"
