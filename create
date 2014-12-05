@@ -13,5 +13,6 @@ VBoxManage createvm --name "$vm_name" --register
 VBoxManage modifyvm "$vm_name" --cpus "$num_cpus" --memory "$memory_size_mb" --vrde off --acpi on --boot1 dvd --rtcuseutc on --ioapic "$io_apic"
 VBoxManage storagectl "$vm_name" --name IDE --add ide --bootable on
 VBoxManage storagectl "$vm_name" --name SATA --add sata --bootable on
+"$DIR/dvd-detach"
 export hd_size_mb
 "$DIR/hd-add"
