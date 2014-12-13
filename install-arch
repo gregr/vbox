@@ -1,0 +1,9 @@
+#!/bin/bash
+set -euf -o pipefail
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$DIR/check-args.sh"
+check_args "$0" "vm_name" "" "iso-path" "" "$@"
+iso_path="$1"
+
+os_type=ArchLinux_64 "$DIR/install-os" "$iso_path"
