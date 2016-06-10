@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eufo pipefail
+
+here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+. "$here/check-args.sh"
+check_args "$0" "vm_name" "" "" "" "$@"
+
+VBoxManage modifyvm "$vm_name" --natdnshostresolver1 on
