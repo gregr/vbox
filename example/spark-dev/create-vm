@@ -1,0 +1,9 @@
+#!/bin/bash
+set -eufo pipefail
+
+vbox=~/git/vbox
+export vm_name=spark
+ubuntu_iso=~/Downloads/ubuntu-14.04.1-server-amd64.iso
+
+"$vbox/create"
+"$vbox/install-ubuntu" "$ubuntu_iso"

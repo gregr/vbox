@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eufo pipefail
+
+vbox=~/git/vbox
+export vm_name=spark
+
+"$vbox/dvd-detach"
+"$vbox/net-nat-forward" ssh 2222 22
